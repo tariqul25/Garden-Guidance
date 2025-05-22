@@ -3,16 +3,28 @@ import { GardenContext } from '../../provider/GardenContext';
 import { Link } from 'react-router';
 import { updateProfile } from 'firebase/auth';
 import { auth } from '../../Firebase/firebase.config';
+import Swal from 'sweetalert2';
 
 const Register = () => {
 
-    const { createUser,GoogleSignIn } = use(GardenContext)
+    const { createUser, GoogleSignIn, setErrorMessage, errorMessage } = use(GardenContext)
     const handleRegister = (e) => {
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form)
         const user = Object.fromEntries(formData.entries())
         const { email, password, name, photoURL } = user
+
+        const passRegEx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+        if (name.length < 6) {
+            return setErrorMessage('Name should be atleast 6 character')
+        }
+        if (passRegEx.test(password) === false) {
+            setErrorMessage('Password must be 1 lower case, 1 upper case and at least 6 character')
+            return;
+        }
+
+
         createUser(email, password)
             .then(result => {
                 updateProfile(auth.currentUser, {
@@ -20,20 +32,34 @@ const Register = () => {
                 }).then((result) => {
                     console.log(result);
                 }).catch((error) => {
-                    console.log(error);
+                    setErrorMessage(error)
                 });
                 console.log(result.user)
                 alert('user added')
             }).catch(error => {
-                console.log(error);
+                const errorMessage = error.message;
+                setErrorMessage(errorMessage)
             })
 
     }
     const handleGoogleSignIn = () => {
         GoogleSignIn()
             .then(result => {
-                console.log(result.user);
-                alert('user addded successfully')
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "Signed in successfully"
+                });
             })
             .catch(error => {
                 console.log(error);
@@ -46,14 +72,17 @@ const Register = () => {
             <div className="card-body">
                 <form onSubmit={handleRegister} className="fieldset">
                     <label className="label">Name</label>
-                    <input type="text" name='name' className="input" placeholder="Name" />
+                    <input type="text" name='name' className="input" placeholder="Name" required/>
                     <label className="label">Email</label>
-                    <input type="email" name='email' className="input" placeholder="Email" />
+                    <input type="email" name='email' className="input" placeholder="Email" required />
                     <label className="label">photoURL</label>
-                    <input type="text" name='photoURL' className="input" placeholder="PhotoURL" />
+                    <input type="text" name='photoURL' className="input" placeholder="PhotoURL" required />
                     <label className="label">Password</label>
-                    <input type="password" name='password' className="input" placeholder="Password" />
+                    <input type="password" name='password' className="input" placeholder="Password" required />
                     <div><a className="link link-hover">Already Have an Account?</a><Link className='underline text-blue-900' to='/login'>Login</Link></div>
+                    {
+                        errorMessage && <p className='text-red-600 w-11/12 mx-auto text-center'>{errorMessage}</p>
+                    }
                     <input type='submit' className="btn btn-neutral mt-4" value='Register' />
                 </form>
                 <button onClick={handleGoogleSignIn} className="btn bg-white text-black border-[#e5e5e5]">
@@ -61,6 +90,7 @@ const Register = () => {
                     Login with Google
                 </button>
             </div>
+
         </div>
     );
 };

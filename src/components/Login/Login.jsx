@@ -1,6 +1,7 @@
 import React, { use, useState } from 'react';
 import { GardenContext } from '../../provider/GardenContext';
 import { Link } from 'react-router';
+import Swal from 'sweetalert2';
 
 const Login = () => {
     const [errorMessage, SetErrorMessage] = useState('')
@@ -24,16 +25,29 @@ const Login = () => {
 
     }
 
-    const handleGoogleSignIn=()=>{
+    const handleGoogleSignIn = () => {
         GoogleSignIn()
-        .then(result =>{
-            console.log(result.user);
-            alert('user addded successfully')
-        })
-        .catch(error =>{
-            console.log(error);
-            alert(error)
-        })
+            .then(result => {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "Signed in successfully"
+                });
+            })
+            .catch(error => {
+                console.log(error);
+                alert(error)
+            })
     }
     return (
         <div>

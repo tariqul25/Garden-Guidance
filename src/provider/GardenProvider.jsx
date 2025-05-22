@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 const GardenProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [loading,setLoading]=useState(true)
+    const [errorMessage,setErrorMessage]=useState('')
     const createUser = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password);
     }
@@ -32,13 +33,16 @@ const GardenProvider = ({ children }) => {
         }
 }, [])
 
+
 const gardenInfo = {
     createUser,
     passSignIn,
     user,
     loading,
     passSignOut,
-    GoogleSignIn
+    GoogleSignIn,
+    setErrorMessage,
+    errorMessage,
 }
 
 return (

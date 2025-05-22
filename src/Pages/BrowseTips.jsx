@@ -1,9 +1,22 @@
 import React from 'react';
-
-const BrowseTips = () => {
+const BrowseTips = ({ alltips }) => {
+    console.log(alltips);
     return (
-        <div>
-            
+        <div className=''>
+            {
+                alltips.map(tips =>
+                    <div className='mb-4'>
+                        <div className="card bg-green-300 text-gray w-full ">
+                            <div className="card-body items-center text-justify flex flex-col-reverse">
+                                <h2 className="card-title text-sm">{tips.tips}</h2>
+                                <div className="card-actions justify-end">
+                                    <button className="btn btn-primary">{tips.trending}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
         </div>
     );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AddTips = () => {
+const AllGardeners = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const AddTips = () => {
     );
 };
 
-export default AddTips;
+export default AllGardeners;
