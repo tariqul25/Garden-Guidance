@@ -15,6 +15,8 @@ const Register = () => {
         const user = Object.fromEntries(formData.entries())
         const { email, password, name, photoURL } = user
 
+        setErrorMessage('')
+
         const passRegEx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
         if (name.length < 6) {
             return setErrorMessage('Name should be atleast 6 character')

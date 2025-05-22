@@ -1,8 +1,9 @@
 import React, { use } from "react";
 import { GardenContext } from "../provider/GardenContext";
+import Swal from "sweetalert2";
 
 const ShareTips = () => {
-    const {user}= use(GardenContext)
+    const { user } = use(GardenContext)
     const handleSubmit = (e) => {
         e.preventDefault();
         const form = e.target;
@@ -21,19 +22,33 @@ const ShareTips = () => {
             },
             body: JSON.stringify(data)
         }).then(res => res.json())
-        .then(data =>{
-            console.log('after giving tips',data);
-        })
+            .then(data => {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "Signed in successfully"
+                });
+            })
 
         fetch('http://localhost:3000/api/gardeners')
-        .then(res=> res.json())
-        .then(data =>{
-            console.log(data);
-        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+            })
 
 
 
-        // form.reset();
+        form.reset();
     };
 
     return (
