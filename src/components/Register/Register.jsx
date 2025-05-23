@@ -47,6 +47,7 @@ const Register = () => {
     const handleGoogleSignIn = () => {
         GoogleSignIn()
             .then(result => {
+                console.log(result.user.email);
                 const Toast = Swal.mixin({
                     toast: true,
                     position: "top",
@@ -57,6 +58,7 @@ const Register = () => {
                         toast.onmouseenter = Swal.stopTimer;
                         toast.onmouseleave = Swal.resumeTimer;
                     }
+                    
                 });
                 Toast.fire({
                     icon: "success",

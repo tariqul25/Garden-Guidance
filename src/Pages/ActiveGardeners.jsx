@@ -2,14 +2,13 @@ import React from 'react';
 // import { useLoaderData } from 'react-router';
 
 const ActiveGardeners = ({gardeners}) => {
-    console.log(gardeners);
- 
+    // console.log(gardeners); 
     return (
         <div  className='grid grid-cols-3 gap-4 my-6'>
             {
                 gardeners.map(gardener =>
                     <div key={gardener.id}>
-                        <div className="card bg-base-100 shadow-sm flex flex-col h-full">
+                        <div className="card bg-base-100 dark:bg-white shadow-sm flex flex-col h-full">
                             <figure>
                                 <img src={gardener.profileImage} alt="Gardener" />
                             </figure>

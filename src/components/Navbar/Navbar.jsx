@@ -3,10 +3,11 @@ import { Link, NavLink } from 'react-router';
 import '../../index.css'
 import { GardenContext } from '../../provider/GardenContext';
 import Swal from 'sweetalert2';
+import { Tooltip } from 'react-tooltip';
 
 const Navbar = () => {
   const { user, passSignOut } = use(GardenContext)
-  // console.log(user.photoURL);
+  console.log(user);
   const handlePassSignOut = (e) => {
     e.preventDefault()
     passSignOut().then(result => {
@@ -33,8 +34,9 @@ const Navbar = () => {
           <nav className="menu menu-horizontal px-1 gap-4">
             <NavLink to='/'>Home</NavLink>
             <NavLink to='/sharetips'>Share a Garden Tip</NavLink>
+            <NavLink to='/alltips'>Browse Tips</NavLink>
             <NavLink to='/allgardeners'>Explore Gardeners</NavLink>
-            <NavLink to='/mytips'>My Tips</NavLink>
+            <NavLink to={`/sharetips/${user?.email}`}>My Tips</NavLink>
           </nav>
         </div>
         <div className="navbar-end">
@@ -42,9 +44,10 @@ const Navbar = () => {
           {
             user &&
             <div className="dropdown dropdown-bottom flex items-center ml-3">
-              <div tabIndex={0} role="button" className="tooltip tooltip-bottom" data-tip={user?.displayName}>
+              <div tabIndex={0} role="button" data-tooltip-id="my-tooltip" data-tooltip-content={user?.displayName} >
                 <img src={user?.photoURL} className="rounded-full w-9 h-9 cursor-pointer" alt="User" />
               </div>
+
 
               <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-23">
                 <li><a>Profile</a></li>
@@ -53,7 +56,7 @@ const Navbar = () => {
               </ul>
             </div>
           }
-
+         <Tooltip id="my-tooltip" place="top" />
         </div>
       </div>
     </div>
