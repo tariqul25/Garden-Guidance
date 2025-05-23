@@ -5,7 +5,6 @@ import Register from "../components/Register/Register";
 import Login from "../components/Login/Login";
 import BrowseTips from "../Pages/BrowseTips";
 import UpdateTips from "../Pages/UpdateTips";
-import ErrorPage from "../Pages/ErrorPage";
 import PrivatePage from "../Pages/PrivatePage";
 import AllGardeners from "../Pages/AllGardeners";
 import MyTips from "../Pages/MyTips";
@@ -32,14 +31,16 @@ const router = createBrowserRouter([
             },
             { path: '/login', element: <Login></Login> },
             { path: '/register', element: <Register></Register> },
-            { path: '/sharetips', element: <ShareTips></ShareTips> },
-            { path: '/sharetips/:email', element: <MyTips></MyTips>, loader: ({ params }) => fetch(`http://localhost:3000/api/sharetips/${params.email}`) },
+            { path: '/sharetips', element: <PrivatePage><ShareTips></ShareTips></PrivatePage> },
+            { path: '/sharetips/:email', element: <PrivatePage><MyTips></MyTips></PrivatePage>, loader: ({ params }) => fetch(`http://localhost:3000/api/sharetips/${params.email}`) },
             { path: '/alltips', element: <AllTips></AllTips>, loader: () => fetch('http://localhost:3000/api/publictips') },
-            { path: '/publictips/:id', element: <TipsDetails></TipsDetails>, loader: ({ params }) => fetch(`http://localhost:3000/api/publictips/${params.id}`) },
-            { path: '/updatetips', element: <UpdateTips></UpdateTips> },
+            { path: '/publictips/:id', element: <PrivatePage> <TipsDetails></TipsDetails></PrivatePage>, loader: ({ params }) => fetch(`http://localhost:3000/api/publictips/${params.id}`) },
+            { path: '/updatetips', element: <PrivatePage><UpdateTips></UpdateTips></PrivatePage> },
             { path: '/allgardeners', element: <AllGardeners></AllGardeners> },
             { path: '/activegardeners', element: <ActiveGardeners></ActiveGardeners> },
-            { path: '/updatetips/:id', element: <UpdateTips></UpdateTips>, loader: ({ params }) => fetch(`http://localhost:3000/api/updatetips/${params.id}`) },
+            { path: '/updatetips/:id', element: <PrivatePage><UpdateTips></UpdateTips></PrivatePage>, loader: ({ params }) => fetch(`http://localhost:3000/api/updatetips/${params.id}`) },
+     
+
         ]
     }
 ])

@@ -1,11 +1,14 @@
 import React, { use } from 'react';
 import { useLoaderData } from 'react-router';
 import { GardenContext } from '../provider/GardenContext';
+import Loading from './Loading';
 
 const UpdateTips = () => {
-    const { user } = use(GardenContext)
-    //  console.log(user);
+    const { user,loading } = use(GardenContext)
     const tip = useLoaderData()
+    if(loading){
+            return <Loading></Loading>
+        }
     //  console.log(tip);
     const handleUpdate = (e) => {
         e.preventDefault()

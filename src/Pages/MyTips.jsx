@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import { Link, useLoaderData } from 'react-router';
 import Swal from 'sweetalert2';
+import { GardenContext } from '../provider/GardenContext';
+import Loading from './Loading';
 
 const MyTips = () => {
     const mytips = useLoaderData()
+    const {loading}=use(GardenContext)
     const [allTips, setAllTips] = useState(mytips)
     console.log(allTips);
+    if (loading) {
+        return <Loading></Loading>
+    }
     const handleTipsDelete = (id) => {
         Swal.fire({
             title: "Are you sure?",
@@ -31,7 +37,7 @@ const MyTips = () => {
                                 title: "Your work has been saved",
                                 showConfirmButton: false,
                                 timer: 1500,
-                               
+
                             })
 
                             const remainingTips = allTips.filter(tips => tips._id !== id)
