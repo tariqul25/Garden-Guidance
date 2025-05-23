@@ -5,7 +5,7 @@ import Loading from './Loading';
 
 const PrivatePage = ({children}) => {
     const {user,loading}=use(GardenContext)
-    console.log(loading);
+    // console.log(loading);
     const location =useLocation()
          if(loading){
           return <Loading></Loading>

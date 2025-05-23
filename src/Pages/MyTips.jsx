@@ -8,7 +8,7 @@ const MyTips = () => {
     const mytips = useLoaderData()
     const {loading}=use(GardenContext)
     const [allTips, setAllTips] = useState(mytips)
-    console.log(allTips);
+    // console.log(allTips);
     if (loading) {
         return <Loading></Loading>
     }
