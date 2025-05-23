@@ -32,11 +32,11 @@ const Register = () => {
                 updateProfile(auth.currentUser, {
                     displayName: name, photoURL: photoURL
                 }).then((result) => {
-                    console.log(result);
+                    //  console.log(result);
                 }).catch((error) => {
                     setErrorMessage(error)
                 });
-                console.log(result.user)
+                //  console.log(result.user)
                 alert('user added')
             }).catch(error => {
                 const errorMessage = error.message;
@@ -47,7 +47,7 @@ const Register = () => {
     const handleGoogleSignIn = () => {
         GoogleSignIn()
             .then(result => {
-                console.log(result.user.email);
+                //  console.log(result.user.email);
                 const Toast = Swal.mixin({
                     toast: true,
                     position: "top",
@@ -66,7 +66,7 @@ const Register = () => {
                 });
             })
             .catch(error => {
-                console.log(error);
+                //  console.log(error);
                 alert(error)
             })
     }

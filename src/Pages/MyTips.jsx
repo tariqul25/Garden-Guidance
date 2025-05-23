@@ -3,7 +3,10 @@ import { Link, useLoaderData } from 'react-router';
 
 const MyTips = () => {
     const mytips =useLoaderData()
-    // console.log(alltips);
+    //  console.log(mytips);
+    const handleTipsDelete=(id)=>{
+
+    }
     return (
          <div className="m-8 overflow-x-auto">
             <table className="table-auto w-full border border-collapse text-center">
@@ -32,15 +35,15 @@ const MyTips = () => {
                                 <td className="px-4 py-2">
                                     <img
                                         className="w-12 h-12 object-cover mx-auto rounded-full"
-                                        src={tips.imageUrl}
+                                        src={tips?.imageUrl}
                                         alt={tips.title}
                                     />
                                 </td>
                                 <td className="px-4 py-2">
-                                   <Link to={`/updatetips/${tips.title}`}><button className="btn btn-ghost btn-xs">Update</button></Link>
+                                  <Link to={`/updatetips/${tips._id}`}><button tips={tips} className='btn btn-ghost btn-xs'>Update</button></Link>
                                 </td>
                                 <td className="px-4 py-2">
-                                   <button className="btn btn-ghost btn-xs">Delete</button>
+                                   <button onClick={()=>handleTipsDelete(tips._id)} className="btn btn-ghost btn-xs">Delete</button>
                                 </td>
                             </tr>
                         ))

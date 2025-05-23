@@ -13,7 +13,7 @@ const ShareTips = () => {
         data.userEmail = user?.email || "";
         data.userName = user?.displayName || "";
 
-        console.log("Submitted Tip:", data);
+        //  console.log("Submitted Tip:", data);
 
         fetch('http://localhost:3000/api/sharetips', {
             method: 'POST',
@@ -43,7 +43,7 @@ const ShareTips = () => {
         fetch('http://localhost:3000/api/gardeners')
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                //  console.log(data);
             })
 
 

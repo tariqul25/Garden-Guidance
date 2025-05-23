@@ -7,7 +7,7 @@ import { Tooltip } from 'react-tooltip';
 
 const Navbar = () => {
   const { user, passSignOut } = use(GardenContext)
-  console.log(user);
+  //  console.log(user);
   const handlePassSignOut = (e) => {
     e.preventDefault()
     passSignOut().then(result => {
@@ -19,7 +19,7 @@ const Navbar = () => {
         timer: 1500
       });
     }).catch(error => {
-      console.log(error);
+      //  console.log(error);
       alert('error')
     })
   }

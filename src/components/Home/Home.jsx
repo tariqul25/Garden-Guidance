@@ -6,8 +6,8 @@ import { useLoaderData } from 'react-router';
 
 const Home = () => {
     const {alltips,gardeners}=useLoaderData()
-    // console.log(alltips);
-    // console.log(gardeners);
+    //  console.log(alltips);
+    //  console.log(gardeners);
     return (
         <div>
             <Banner></Banner>

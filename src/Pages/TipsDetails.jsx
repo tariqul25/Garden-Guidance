@@ -4,7 +4,7 @@ import { useLoaderData } from 'react-router';
 
 const TipsDetails = () => {
     const gardener= useLoaderData()
-    console.log(gardener);
+     console.log(gardener);
  
     return (
         <div className='w-full flex my-6 gap-4'>

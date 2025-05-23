@@ -3,7 +3,7 @@ import TypeWriter from './TypeWriter';
 
 
 const ActiveGardeners = ({ gardeners }) => {
-    // console.log(gardeners); 
+    //  console.log(gardeners); 
      const dynamicWords=['Our Active Gardener']
     return (
         <div>

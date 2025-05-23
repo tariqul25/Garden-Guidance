@@ -1,6 +1,6 @@
 import React from 'react';
 const BrowseTips = ({ alltips }) => {
-    // console.log(alltips);
+    //  console.log(alltips);
     return (
         <div className=''>
             {

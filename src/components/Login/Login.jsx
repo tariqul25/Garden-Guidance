@@ -16,7 +16,7 @@ const Login = () => {
 
         passSignIn(email, password)
             .then(result => {
-                console.log(result.user);
+                //  console.log(result.user);
                 alert('sign in success')
             })
             .catch(error => {
@@ -45,7 +45,7 @@ const Login = () => {
                 });
             })
             .catch(error => {
-                console.log(error);
+                //  console.log(error);
                 alert(error)
             })
     }

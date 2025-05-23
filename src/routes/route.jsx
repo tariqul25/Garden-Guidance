@@ -39,7 +39,7 @@ const router = createBrowserRouter([
             { path: '/updatetips', element: <UpdateTips></UpdateTips> },
             { path: '/allgardeners', element: <AllGardeners></AllGardeners> },
             { path: '/activegardeners', element: <ActiveGardeners></ActiveGardeners> },
-            { path: '/updatetips/:title', element: <UpdateTips></UpdateTips>, loader: ({ params }) => fetch(`http://localhost:3000/api/updatetips/${params.title}`) },
+            { path: '/updatetips/:id', element: <UpdateTips></UpdateTips>, loader: ({ params }) => fetch(`http://localhost:3000/api/updatetips/${params.id}`) },
         ]
     }
 ])
