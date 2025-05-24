@@ -17,7 +17,7 @@ const UpdateTips = () => {
         const updatedTips = Object.fromEntries(formData.entries())
         //  console.log(updatedTips);
         //  console.log(tip._id);
-        fetch(`https://garden-guidance-server.vercel.app/api/updatetips/${tip._id}`, {
+        fetch(`http://localhost:3000/api/updatetips/${tip._id}`, {
             method: "PUT",
             headers: { "content-type": "application/json" },
             body: JSON.stringify(updatedTips)
