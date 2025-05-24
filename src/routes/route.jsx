@@ -20,8 +20,8 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true, element: <Home></Home>, loader: async () => {
-                    const gardenersRes = await fetch('http://localhost:3000/api/gardeners');
-                    const tipsRes = await fetch('http://localhost:3000/api/top-trending');
+                    const gardenersRes = await fetch('https://garden-guidance-server.vercel.app/api/gardeners');
+                    const tipsRes = await fetch('https://garden-guidance-server.vercel.app/api/top-trending');
 
                     return {
                         gardeners: await gardenersRes.json(),
@@ -32,13 +32,13 @@ const router = createBrowserRouter([
             { path: '/login', element: <Login></Login> },
             { path: '/register', element: <Register></Register> },
             { path: '/sharetips', element: <PrivatePage><ShareTips></ShareTips></PrivatePage> },
-            { path: '/sharetips/:email', element: <PrivatePage><MyTips></MyTips></PrivatePage>, loader: ({ params }) => fetch(`http://localhost:3000/api/sharetips/${params.email}`) },
-            { path: '/alltips', element: <AllTips></AllTips>, loader: () => fetch('http://localhost:3000/api/publictips') },
-            { path: '/publictips/:id', element: <PrivatePage> <TipsDetails></TipsDetails></PrivatePage>, loader: ({ params }) => fetch(`http://localhost:3000/api/publictips/${params.id}`) },
+            { path: '/sharetips/:email', element: <PrivatePage><MyTips></MyTips></PrivatePage>, loader: ({ params }) => fetch(`https://garden-guidance-server.vercel.app/api/sharetips/${params.email}`) },
+            { path: '/alltips', element: <AllTips></AllTips>, loader: () => fetch('https://garden-guidance-server.vercel.app/api/publictips') },
+            { path: '/publictips/:id', element: <PrivatePage> <TipsDetails></TipsDetails></PrivatePage>, loader: ({ params }) => fetch(`https://garden-guidance-server.vercel.app/api/publictips/${params.id}`) },
             { path: '/updatetips', element: <PrivatePage><UpdateTips></UpdateTips></PrivatePage> },
             { path: '/allgardeners', element: <AllGardeners></AllGardeners> },
             { path: '/activegardeners', element: <ActiveGardeners></ActiveGardeners> },
-            { path: '/updatetips/:id', element: <PrivatePage><UpdateTips></UpdateTips></PrivatePage>, loader: ({ params }) => fetch(`http://localhost:3000/api/updatetips/${params.id}`) },
+            { path: '/updatetips/:id', element: <PrivatePage><UpdateTips></UpdateTips></PrivatePage>, loader: ({ params }) => fetch(`https://garden-guidance-server.vercel.app/api/updatetips/${params.id}`) },
      
 
         ]

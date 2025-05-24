@@ -16,7 +16,7 @@ const TipsDetails = () => {
                 <p>{gardener.difficulty}</p>
            </div>
            <div className='w-7/12 relative '>
-            <img className=' h-96  w-full object-cover rounded-xl' src='https://i.ibb.co/cS12qYwV/IMG-20250501-225320.png' alt="" />
+            <img className=' h-96  w-full object-cover rounded-xl' src={gardener.imageUrl} alt="" />
             {/* <p className='absolute bottom-16'>like</p> */}
            </div>
         </div>
