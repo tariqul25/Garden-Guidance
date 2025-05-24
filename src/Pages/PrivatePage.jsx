@@ -7,6 +7,7 @@ const PrivatePage = ({children}) => {
     const {user,loading}=use(GardenContext)
     // console.log(loading);
     const location =useLocation()
+    console.log(location);
          if(loading){
           return <Loading></Loading>
         }

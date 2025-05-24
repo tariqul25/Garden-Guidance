@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#C8E6C9] text-base-content dark:bg-green-400 dark:text-black p-10">
+    <footer className="bg-green-400 text-black  dark:bg-green-400 dark:text-black p-10">
       <div className="w-11/12 mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         
         {/* Contact Info */}
@@ -44,7 +44,7 @@ const Footer = () => {
 
       </div>
 
-      <div className="mt-10 text-center text-sm text-gray-500 dark:text-black">
+      <div className="mt-10 text-center text-sm text-black dark:text-black">
         © {new Date().getFullYear()} Garden-Guidance. All rights reserved.
       </div>
     </footer>

@@ -22,7 +22,7 @@ const ShareTips = () => {
 
         //  console.log("Submitted Tip:", data);
 
-        fetch('http://localhost:3000/api/sharetips', {
+        fetch('https://garden-guidance-server.vercel.app/api/sharetips', {
             method: 'POST',
             headers: {
                 "content-type": "application/json"
@@ -47,7 +47,7 @@ const ShareTips = () => {
                 });
             })
 
-        fetch('http://localhost:3000/api/gardeners')
+        fetch('https://garden-guidance-server.vercel.app/api/gardeners')
             .then(res => res.json())
             .then(data => {
                 //  console.log(data);

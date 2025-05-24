@@ -1,11 +1,14 @@
 import React, { use, useState } from 'react';
 import { GardenContext } from '../../provider/GardenContext';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 
 const Login = () => {
     const [errorMessage, SetErrorMessage] = useState('')
     const { passSignIn, GoogleSignIn } = use(GardenContext)
+    const location = useLocation()
+    console.log(location);
+    const navigate = useNavigate()
     const handlePassSignIn = (e) => {
         e.preventDefault()
         const email = e.target.email.value;
@@ -17,7 +20,8 @@ const Login = () => {
         passSignIn(email, password)
             .then(result => {
                 //  console.log(result.user);
-                alert('sign in success')
+                console.log('sign in success')
+                navigate(`${location.state ? location.state : '/'}`)
             })
             .catch(error => {
                 SetErrorMessage(error);
@@ -43,6 +47,7 @@ const Login = () => {
                     icon: "success",
                     title: "Signed in successfully"
                 });
+                navigate(`${location.state ? location.state : '/'}`)
             })
             .catch(error => {
                 //  console.log(error);
@@ -50,28 +55,76 @@ const Login = () => {
             })
     }
     return (
-        <div>
-            <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl mx-auto my-8">
-                <div className="card-body">
-                    <h1 className='text-3xl text-center'>Login Now</h1>
-                    <form onSubmit={handlePassSignIn} className="fieldset">
-                        <label className="label">Email</label>
-                        <input type="email" className="input" name='email' placeholder="Email" />
-                        <label className="label">Password</label>
-                        <input type="password" className="input" name='password' placeholder="Password" />
-                        <div><a className="link link-hover">Forgot password?</a></div>
-                        <input className="btn btn-neutral mt-4" type='submit' value='Login' />
-                    </form>
-                    <p className=''>New to this website?<Link className='underline text-blue-900' to='/register'>Register</Link></p>
-                    <button onClick={handleGoogleSignIn} className="btn bg-white text-black border-[#e5e5e5]">
-                        <svg aria-label="Google logo" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path d="m0 0H512V512H0" fill="#fff"></path><path fill="#34a853" d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"></path><path fill="#4285f4" d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"></path><path fill="#fbbc02" d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"></path><path fill="#ea4335" d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"></path></g></svg>
-                        Login with Google
-                    </button>
-                    {
-                        errorMessage ? <p>Error</p> : ''
-                    }
+        <div className='my-4'>
+            <div className="w-full max-w-sm p-6 m-auto mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800">
+                <div className="flex justify-center mx-auto">
+                    <img className="w-auto h-7 sm:h-8" src="logo.png" alt="Logo" />
                 </div>
+
+                <form onSubmit={handlePassSignIn} className="mt-6">
+                    <div>
+                        <label htmlFor="email" className="block text-sm text-gray-800 dark:text-gray-200">Email</label>
+                        <input
+                            type="email"
+                            name="email"
+                            required
+                            placeholder="Enter your email"
+                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                        />
+                    </div>
+
+                    <div className="mt-4">
+                        <div className="flex items-center justify-between">
+                            <label htmlFor="password" className="block text-sm text-gray-800 dark:text-gray-200">Password</label>
+                            <a href="#" className="text-xs text-gray-600 dark:text-gray-400 hover:underline">Forget Password?</a>
+                        </div>
+
+                        <input
+                            type="password"
+                            name="password"
+                            required
+                            placeholder="Enter your password"
+                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                        />
+                    </div>
+
+                    <div className="mt-6">
+                        <button
+                            type="submit"
+                            className="w-full px-6 py-2.5 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
+                        >
+                            Sign In
+                        </button>
+                    </div>
+                </form>
+
+                <div className="flex items-center justify-between mt-4">
+                    <span className="w-1/5 border-b dark:border-gray-600 lg:w-1/5"></span>
+                    <span className="text-xs text-center text-gray-500 uppercase dark:text-gray-400">or login with</span>
+                    <span className="w-1/5 border-b dark:border-gray-400 lg:w-1/5"></span>
+                </div>
+
+                <div className="flex items-center mt-6 -mx-2">
+                    <button
+                        onClick={handleGoogleSignIn}
+                        type="button"
+                        className="flex items-center justify-center w-full px-6 py-2 mx-2 text-sm font-medium text-white transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:bg-blue-400 focus:outline-none"
+                    >
+                        <svg className="w-4 h-4 mx-2 fill-current" viewBox="0 0 24 24">
+                            <path d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.345-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z"></path>
+                        </svg>
+                        <span className="hidden mx-2 sm:inline">Sign in with Google</span>
+                    </button>
+                </div>
+
+                <p className="mt-8 text-xs font-light text-center text-gray-400">
+                    Don’t have an account?
+                    <Link to="/register" className="font-medium text-gray-700 dark:text-gray-200 hover:underline"> Register</Link>
+                </p>
+
+                {errorMessage && <p className="text-red-500 text-center mt-2">{errorMessage}</p>}
             </div>
+
         </div>
     );
 };

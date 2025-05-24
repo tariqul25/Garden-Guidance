@@ -2,7 +2,7 @@ import React from 'react';
 import TypeWriter from './TypeWriter';
 
 
-const ActiveGardeners = ({ gardeners }) => {
+const ActiveGardeners = ({ gardeners,like }) => {
     //  console.log(gardeners); 
      const dynamicWords=['Our Active Gardener']
     return (
@@ -13,7 +13,7 @@ const ActiveGardeners = ({ gardeners }) => {
                 {
                     gardeners.map(gardener =>
                         <div key={gardener.id}>
-                            <div className="card bg-base-100 dark:bg-white shadow-sm flex flex-col h-full">
+                            <div className="card bg-white dark:bg-white shadow-sm flex flex-col h-full">
                                 <figure>
                                     <img src={gardener.profileImage} alt="Gardener" />
                                 </figure>
