@@ -5,6 +5,7 @@ import BrowseTips from '../../Pages/BrowseTips';
 import { useLoaderData } from 'react-router';
 import { GardenContext } from '../../provider/GardenContext';
 import Loading from '../../Pages/Loading';
+import Qna from '../../Pages/Qna';
 
 const Home = () => {
     const {loading}=use(GardenContext)
@@ -19,6 +20,7 @@ const Home = () => {
             <Banner></Banner>
             <ActiveGardeners gardeners={gardeners}></ActiveGardeners>
             <BrowseTips alltips={alltips}></BrowseTips>
+            <Qna></Qna>
         </div>
     );
 };
