@@ -10,6 +10,11 @@ A vibrant platform where gardening enthusiasts can **share tips, find local gard
 This project is a full-stack web application aimed at building a community for gardeners to exchange knowledge and resources. Users can register/login, share gardening tips, browse public tips, explore gardeners' profiles, and manage their own contributions. The application offers private routes, secure authentication, real-time like features, and a responsive UI that works smoothly on both desktop and mobile devices.
 
 ---
+## 🌐 Live Site & Repositories
+
+- 🔗 Live Website: [https://your-live-link.com](https://your-live-link.com)
+- 🧠 Client Repo: [GitHub - Client](https://github.com/your-username/artifacts-client)
+- 🧪 Server Repo: [GitHub - Server](https://github.com/your-username/artifacts-server)
 
 ## ✨ Key Features
 
