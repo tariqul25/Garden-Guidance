@@ -12,9 +12,9 @@ This project is a full-stack web application aimed at building a community for g
 ---
 ## 🌐 Live Site & Repositories
 
-- 🔗 Live Website: [https://your-live-link.com](https://your-live-link.com)
-- 🧠 Client Repo: [GitHub - Client](https://github.com/your-username/artifacts-client)
-- 🧪 Server Repo: [GitHub - Server](https://github.com/your-username/artifacts-server)
+- 🔗 Live Website: [https://garden-guidance.web.app/](https://garden-guidance.web.app/)
+- 🧠 Client Repo: [GitHub - Client](https://github.com/Programming-Hero-Web-Course4/b11a10-client-side-tariqul25)
+- 🧪 Server Repo: [GitHub - Server](https://github.com/Programming-Hero-Web-Course4/b11a10-server-side-tariqul25)
 
 ## ✨ Key Features
 
