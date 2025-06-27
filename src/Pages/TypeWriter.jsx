@@ -4,7 +4,7 @@ import { Typewriter } from 'react-simple-typewriter'
 const TypeWriter = ({words}) => {
   return (
    
-      <h1 className="text-xl font-extrabold mb-4 text-center h-6 w-60 bg-green-300 rounded-2xl flex justify-center items-center mx-auto">
+      <h1 className="text-xl font-extrabold mb-4 text-center h-6 w-60 bg-green-300 rounded-md flex justify-center items-center mx-auto">
         <Typewriter
           words={words}
           loop={true}         

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Qna = () => {
     return (
-        <div className='my-4 ' >
+        <div className='py-4 ' >
             <h1 className='text-4xl text-center'>QnA</h1>
             <div className="collapse collapse-plus bg-green-200 dark:bg-green-200 border border-base-300">
                 <input type="radio" name="my-accordion-3" />

@@ -1,11 +1,12 @@
 import React, { use } from "react";
 import { GardenContext } from "../provider/GardenContext";
 import Swal from "sweetalert2";
-import { Navigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import Loading from "./Loading";
 
 const ShareTips = () => {
     const { user,loading } = use(GardenContext)
+    const navigate= useNavigate()
     
     if(loading){
         return <Loading></Loading>
@@ -22,7 +23,7 @@ const ShareTips = () => {
 
         //  console.log("Submitted Tip:", data);
 
-        fetch('https://garden-guidance-server.vercel.app/api/sharetips', {
+        fetch('http://localhost:3000/api/sharetips', {
             method: 'POST',
             headers: {
                 "content-type": "application/json"
@@ -43,25 +44,24 @@ const ShareTips = () => {
                 });
                 Toast.fire({
                     icon: "success",
-                    title: "Signed in successfully"
+                    title: "Yaee... You Shared a Tips"
                 });
             })
 
-        fetch('https://garden-guidance-server.vercel.app/api/gardeners')
+        fetch('http://localhost:3000/api/gardeners')
             .then(res => res.json())
             .then(data => {
                 //  console.log(data);
             })
 
-
-
         form.reset();
+        navigate('/alltips')
     };
     if (!user) {
         return <Navigate to="/login" />;
     }
     return (
-        <div className="max-w-4xl mx-auto p-6 bg-[##7BAF9E	] rounded-2xl shadow-lg my-6">
+        <div className="max-w-4xl mx-auto p-6 bg-[##7BAF9E	] rounded-2xl shadow-lg py-6">
             <h2 className="text-2xl font-bold mb-6">Share a Garden Tips</h2>
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>

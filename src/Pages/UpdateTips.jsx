@@ -1,14 +1,16 @@
 import React, { use } from 'react';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
 import { GardenContext } from '../provider/GardenContext';
 import Loading from './Loading';
+import Swal from 'sweetalert2';
 
 const UpdateTips = () => {
-    const { user,loading } = use(GardenContext)
+    const { user, loading } = use(GardenContext)
+    const navigate=useNavigate()
     const tip = useLoaderData()
-    if(loading){
-            return <Loading></Loading>
-        }
+    if (loading) {
+        return <Loading></Loading>
+    }
     //  console.log(tip);
     const handleUpdate = (e) => {
         e.preventDefault()
@@ -17,14 +19,29 @@ const UpdateTips = () => {
         const updatedTips = Object.fromEntries(formData.entries())
         //  console.log(updatedTips);
         //  console.log(tip._id);
-        fetch(`https://garden-guidance-server.vercel.app/api/updatetips/${tip._id}`, {
+        fetch(`http://localhost:3000/api/updatetips/${tip._id}`, {
             method: "PUT",
             headers: { "content-type": "application/json" },
             body: JSON.stringify(updatedTips)
         })
-        .then(res => res.json())
+            .then(res => res.json())
             .then(data => {
-                //  console.log('updatated data', data);
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "Update Successfull"
+                });
+                navigate(`/sharetips/${user?.email}`)
             })
     }
     return (
