@@ -12,6 +12,7 @@ import Categories from '../../Pages/Categories';
 const Home = () => {
     const {loading}=use(GardenContext)
         const {trendingtips,gardeners}=useLoaderData()
+        console.log(trendingtips,gardeners);
 
     if(loading){
         return <Loading></Loading>

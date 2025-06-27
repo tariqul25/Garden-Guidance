@@ -2,8 +2,8 @@ import React from 'react';
 
 const Qna = () => {
     return (
-        <div className='py-4 ' >
-            <h1 className='text-4xl text-center'>QnA</h1>
+        <div className='pb-4' >
+            <h1 className='text-3xl m-8 font-bold text-center'>QnA</h1>
             <div className="collapse collapse-plus bg-green-200 dark:bg-green-200 border border-base-300">
                 <input type="radio" name="my-accordion-3" />
                 <div className="collapse-title font-semibold">How can I start a garden in a small space?</div>

@@ -7,7 +7,9 @@ const ActiveGardeners = ({ gardeners }) => {
 
   return (
     <div className="px-4">
-      <TypeWriter words={dynamicWords}></TypeWriter>
+    <div className='m-8'>
+        <TypeWriter words={dynamicWords}></TypeWriter>
+    </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-6">
         {gardeners.map((gardener) => (

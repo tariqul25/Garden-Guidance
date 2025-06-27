@@ -1,4 +1,3 @@
-git pull origin main
 import React, { use, useState } from 'react';
 import { useLoaderData } from 'react-router';
 import { GardenContext } from '../Provider/GardenContext';

@@ -24,7 +24,7 @@ const MyTips = () => {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                fetch(`http://localhost:3000/api/sharetips/${id}`, {
+                fetch(`https://garden-guidance-server.vercel.app/api/sharetips/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
