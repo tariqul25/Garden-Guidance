@@ -13,8 +13,8 @@ This project is a full-stack web application aimed at building a community for g
 ## 🌐 Live Site & Repositories
 
 - 🔗 Live Website: [https://garden-guidance.web.app/](https://garden-guidance.web.app/)
-- 🧠 Client Repo: [GitHub - Client](https://github.com/Programming-Hero-Web-Course4/b11a10-client-side-tariqul25)
-- 🧪 Server Repo: [GitHub - Server](https://github.com/Programming-Hero-Web-Course4/b11a10-server-side-tariqul25)
+- 🧠 Client Repo: [ GitHub-Client ](https://github.com/Programming-Hero-Web-Course4/b11a10-client-side-tariqul25)
+- 🧪 Server Repo: [ GitHub-Server ](https://github.com/Programming-Hero-Web-Course4/b11a10-server-side-tariqul25)
 
 ## ✨ Key Features
 
@@ -53,17 +53,25 @@ This project is a full-stack web application aimed at building a community for g
 
 ```json
 {
-  "axios": "^1.10.0",
-  "firebase": "^11.8.1",
-  "react": "^19.1.0",
-  "react-dom": "^19.1.0",
-  "react-hook-form": "^7.x",
-  "react-icons": "^5.5.0",
-  "react-router-dom": "^7.6.1",
-  "sweetalert2": "^11.22.0",
-  "tailwindcss": "^4.1.8",
-  "lottie-react": "^2.4.1",
-  "jsonwebtoken": "^9.x",
-  "express": "^4.x",
-  "mongoose": "^7.x"
+  "@tailwindcss/vite": "^4.1.10",
+    "dotenv": "^16.5.0",
+    "firebase": "^11.9.1",
+    "firebase-admin": "^13.4.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router": "^7.6.2",
+    "react-simple-typewriter": "^5.0.1",
+    "react-toggle-dark-mode": "^1.1.1",
+    "react-tooltip": "^5.29.1",
+    "sweetalert2": "^11.22.1",
+    "swiper": "^11.2.8",
+    "tailwindcss": "^4.1.10"
+}
+
+{
+ "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongodb": "^6.16.0",
+    "nodemon": "^3.1.10"
 }
