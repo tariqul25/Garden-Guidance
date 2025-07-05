@@ -1,98 +1,76 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Autoplay } from "swiper/modules";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 import "swiper/css";
+import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Link } from "react-router";
 
 const Banner = () => {
+  const sliderData = [
+    {
+      id: 1,
+      title: 'Spring Garden Workshop',
+      subtitle: 'Join our seasonal gardening event',
+      description: 'Learn essential spring planting techniques from expert gardeners',
+      image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1200',
+      buttonText: 'Register Now',
+      date: 'March 15, 2024'
+    },
+    {
+      id: 2,
+      title: 'Urban Farming Seminar',
+      subtitle: 'Growing food in small spaces',
+      description: 'Discover innovative techniques for apartment and balcony gardening',
+      image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1200',
+      buttonText: 'Learn More',
+      date: 'March 22, 2024'
+    },
+    {
+      id: 3,
+      title: 'Composting Community Day',
+      subtitle: 'Build sustainable gardens together',
+      description: 'Hands-on workshop for creating nutrient-rich compost at home',
+      image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1200',
+      buttonText: 'Join Event',
+      date: 'March 29, 2024'
+    }
+  ];
 
   return (
-    <div className="flex items-center justify-center pt-4 mb-3 ">
+    <section className="h-[70vh] relative">
       <Swiper
-        loop={true}
-        pagination={{ dynamicBullets: true }}
-        autoplay={{
-          delay: 3500,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: false
-        }}
-        modules={[Pagination, Autoplay]}
-        className="w-full h-[60vh] md:h-[70vh] "
+        modules={[Navigation, Pagination, Autoplay]}
+        navigation
+        pagination={{ clickable: true }}
+        autoplay={{ delay: 5000 }}
+        loop
+        className="h-full"
       >
-        <SwiperSlide className="relative h-[400px] w-full">
-          {/* Banner Image (fills slide) */}
-          <img
-            src="garden-2.png"
-            className="w-full h-full object-cover"
-            alt="Garden Banner"
-          />
-
-          {/* Left-aligned overlay content */}
-          <div className="absolute inset-0 flex flex-col items-start justify-center gap-4 text-white p-8 ml-6 md:ml-10">
-            {/* Text (left-aligned) */}
-            <h2 className="text-3xl font-bold max-w-[80%]">Natural Garden</h2>
-            <p className="text-lg max-w-[80%]">
-              Experience the beauty of organic plants and natural landscapes.
-            </p>
-            {/* Button (left-aligned) */}
-            <Link to='/alltips'>
-
-              <button className="btn bg-green-600 hover:bg-green-700 px-6 py-2 rounded-lg">
-                Explore Now
-              </button>
-            </Link>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide className="relative h-[400px] w-full">
-          {/* Banner Image (fills slide) */}
-          <img
-            src="vege.png"
-            className="w-full h-full object-cover"
-            alt="Garden Banner"
-          />
-
-          {/* Left-aligned overlay content */}
-          <div className="absolute inset-0 flex flex-col items-start justify-center gap-4 text-white p-8 ml-10">
-            {/* Text (left-aligned) */}
-            <h2 className="text-3xl font-bold max-w-[80%]">Vegetable Garden</h2>
-            <p className="text-lg max-w-[80%]">
-              Grow your own fresh and healthy vegetables at home with our tips.
-            </p>
-            {/* Button (left-aligned) */}
-            <Link to='/alltips'><button className="btn bg-green-600 hover:bg-green-700 px-6 py-2 rounded-lg">
-              Explore Now
-            </button></Link>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide className="relative h-[400px] w-full">
-          {/* Banner Image (fills slide) */}
-          <img
-            src="flower.png"
-            className="w-full h-full object-cover"
-            alt="Garden Banner"
-          />
-
-          {/* Left-aligned overlay content */}
-          <div className="absolute inset-0 flex flex-col items-start justify-center gap-4 text-white p-8 ml-10">
-            {/* Text (left-aligned) */}
-            <h2 className="text-3xl font-bold max-w-[80%]">Flower Garden</h2>
-            <p className="text-lg max-w-[80%]">
-              Discover vibrant flowers and creative ways to beautify your garden.
-            </p>
-
-            {/* Button (left-aligned) */}
-            <Link to='/alltips'>
-              <button className="btn bg-green-600 hover:bg-green-700 px-6 py-2 rounded-lg">
-                Explore Now
-              </button>
-            </Link>
-          </div>
-        </SwiperSlide>
-
+        {sliderData.map((slide) => (
+          <SwiperSlide key={slide.id}>
+            <div
+              className="hero h-full"
+              style={{
+                backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${slide.image})`
+              }}
+            >
+              <div className="hero-content text-center text-white">
+                <div className="max-w-md">
+                  <div className="flex items-center justify-center gap-2 mb-2 text-sm">
+                    <div>{slide.date}</div>
+                  </div>
+                  <h1 className="mb-2 text-4xl font-bold">{slide.title}</h1>
+                  <h2 className="mb-4 text-xl font-semibold text-green-200">{slide.subtitle}</h2>
+                  <p className="mb-6">{slide.description}</p>
+                  <button className="btn btn-primary">{slide.buttonText}</button>
+                </div>
+              </div>
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
-    </div>
+    </section>
   );
 };
 

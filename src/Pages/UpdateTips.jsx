@@ -1,161 +1,304 @@
-import React, { use } from 'react';
-import { useLoaderData, useNavigate } from 'react-router';
+import React, { use, useState } from 'react';
+import { useLoaderData, useNavigate, Link } from 'react-router';
 import { GardenContext } from '../provider/GardenContext';
 import Loading from './Loading';
 import Swal from 'sweetalert2';
 
 const UpdateTips = () => {
-    const { user, loading } = use(GardenContext)
-    const navigate=useNavigate()
-    const tip = useLoaderData()
-    if (loading) {
-        return <Loading></Loading>
-    }
-    //  console.log(tip);
-    const handleUpdate = (e) => {
-        e.preventDefault()
-        const form = e.target;
-        const formData = new FormData(form)
-        const updatedTips = Object.fromEntries(formData.entries())
-        //  console.log(updatedTips);
-        //  console.log(tip._id);
-        fetch(`https://garden-guidance-server.vercel.app/api/updatetips/${tip._id}`, {
-            method: "PUT",
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify(updatedTips)
-        })
-            .then(res => res.json())
-            .then(data => {
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top",
-                    showConfirmButton: false,
-                    timer: 1500,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-                Toast.fire({
-                    icon: "success",
-                    title: "Update Successfull"
-                });
-                navigate(`/sharetips/${user?.email}`)
-            })
-    }
-    return (
-        <div>
+  const { user, loading } = use(GardenContext);
+  const navigate = useNavigate();
+  const tip = useLoaderData();
 
-            <div className="max-w-4xl mx-auto p-6 bg-[##7BAF9E	] rounded-2xl shadow-lg my-6">
-                <h2 className="text-2xl font-bold mb-6">Update Your Tips</h2>
-                <form onSubmit={handleUpdate} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label className="block font-medium">Title</label>
-                        <input
-                            type="text"
-                            name="title"
-                            className="w-full p-2 border rounded-md"
-                            placeholder="How I Grow Tomatoes Indoors"
-                            defaultValue={tip.title}
-                            required
+  const [formData, setFormData] = useState({
+    title: tip.title || '',
+    topic: tip.topic || '',
+    difficulty: tip.difficulty || 'Easy',
+    category: tip.category || 'Plant Care',
+    availability: tip.availability || 'Public',
+    imageUrl: tip.imageUrl || '',
+    description: tip.description || '',
+    userEmail: user?.email || '',
+    userName: user?.displayName || '',
+  });
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    fetch(`https://garden-guidance-server.vercel.app/api/updatetips/${tip._id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then(() => {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: 'success',
+          title: 'Update Successful',
+        });
+        navigate(`/sharetips/${user?.email}`);
+      });
+  };
+
+  return (
+    <div className="min-h-screen bg-base-100 dark:bg-gray-900 py-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          {/* Breadcrumb */}
+          <div className="breadcrumbs text-sm mb-6 text-base-content dark:text-base-content/70">
+            <ul>
+              <li>
+                <Link to="/" className="text-primary hover:text-primary-focus">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/my-tips" className="text-primary hover:text-primary-focus">
+                  My Tips
+                </Link>
+              </li>
+              <li className="text-base-content/60 dark:text-base-content/40">Update Tip</li>
+            </ul>
+          </div>
+
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-primary dark:text-primary mb-4">
+              Update Garden Tip
+            </h1>
+            <p className="text-lg text-base-content/70 dark:text-base-content/50">
+              Edit your gardening knowledge and keep the community updated
+            </p>
+          </div>
+
+          <div className="card bg-base-200 dark:bg-gray-800 shadow-xl">
+            <div className="card-body">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-semibold text-base-content dark:text-base-content">
+                        Title *
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      name="title"
+                      value={formData.title}
+                      onChange={handleInputChange}
+                      placeholder="e.g., How I Grow Tomatoes Indoors"
+                      className="input input-bordered w-full bg-base-100 dark:bg-gray-700 text-base-content dark:text-base-content"
+                      required
+                    />
+                  </div>
+
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-semibold text-base-content dark:text-base-content">
+                        Plant Type/Topic *
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      name="topic"
+                      value={formData.topic}
+                      onChange={handleInputChange}
+                      placeholder="e.g., Tomatoes, Herbs, Succulents"
+                      className="input input-bordered w-full bg-base-100 dark:bg-gray-700 text-base-content dark:text-base-content"
+                      required
+                    />
+                  </div>
+
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-semibold text-base-content dark:text-base-content">
+                        Difficulty Level *
+                      </span>
+                    </label>
+                    <select
+                      name="difficulty"
+                      value={formData.difficulty}
+                      onChange={handleInputChange}
+                      className="select select-bordered w-full bg-base-100 dark:bg-gray-700 text-base-content dark:text-base-content"
+                    >
+                      <option value="Easy">Easy</option>
+                      <option value="Medium">Medium</option>
+                      <option value="Hard">Hard</option>
+                    </select>
+                  </div>
+
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-semibold text-base-content dark:text-base-content">
+                        Category *
+                      </span>
+                    </label>
+                    <select
+                      name="category"
+                      value={formData.category}
+                      onChange={handleInputChange}
+                      className="select select-bordered w-full bg-base-100 dark:bg-gray-700 text-base-content dark:text-base-content"
+                    >
+                      <option value="Plant Care">Plant Care</option>
+                      <option value="Composting">Composting</option>
+                      <option value="Vertical Gardening">Vertical Gardening</option>
+                      <option value="Indoor Gardening">Indoor Gardening</option>
+                      <option value="Organic Gardening">Organic Gardening</option>
+                      <option value="Pest Control">Pest Control</option>
+                      <option value="Soil Management">Soil Management</option>
+                      <option value="Seasonal Care">Seasonal Care</option>
+                    </select>
+                  </div>
+
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-semibold text-base-content dark:text-base-content">
+                        Availability *
+                      </span>
+                    </label>
+                    <select
+                      name="availability"
+                      value={formData.availability}
+                      onChange={handleInputChange}
+                      className="select select-bordered w-full bg-base-100 dark:bg-gray-700 text-base-content dark:text-base-content"
+                    >
+                      <option value="Public">Public</option>
+                      <option value="Hidden">Hidden</option>
+                    </select>
+                  </div>
+
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-semibold text-base-content dark:text-base-content">
+                        Image URL
+                      </span>
+                    </label>
+                    <input
+                      type="url"
+                      name="imageUrl"
+                      value={formData.imageUrl}
+                      onChange={handleInputChange}
+                      placeholder="https://example.com/image.jpg"
+                      className="input input-bordered w-full bg-base-100 dark:bg-gray-700 text-base-content dark:text-base-content"
+                    />
+                  </div>
+                </div>
+
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text font-semibold text-base-content dark:text-base-content">
+                      Description *
+                    </span>
+                  </label>
+                  <textarea
+                    name="description"
+                    value={formData.description}
+                    onChange={handleInputChange}
+                    placeholder="Share your detailed gardening tip..."
+                    className="textarea textarea-bordered h-32 w-full bg-base-100 dark:bg-gray-700 text-base-content dark:text-base-content"
+                    required
+                  ></textarea>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-semibold text-base-content dark:text-base-content">
+                        User Email
+                      </span>
+                    </label>
+                    <input
+                      type="email"
+                      name="userEmail"
+                      value={formData.userEmail}
+                      className="input input-bordered w-full bg-base-300 dark:bg-gray-600 text-base-content dark:text-base-content"
+                      readOnly
+                    />
+                  </div>
+
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-semibold text-base-content dark:text-base-content">
+                        User Name
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      name="userName"
+                      value={formData.userName}
+                      className="input input-bordered w-full bg-base-300 dark:bg-gray-600 text-base-content dark:text-base-content"
+                      readOnly
+                    />
+                  </div>
+                </div>
+
+                <div className="form-control pt-4">
+                  <div className="flex flex-col md:flex-row gap-4">
+                    <button
+                      type="submit"
+                      className="btn btn-primary flex-1"
+                    >
+                      <svg
+                        className="w-5 h-5 mr-2 inline-block"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
                         />
-                    </div>
-
-                    <div>
-                        <label className="block font-medium">Plant Type / Topic</label>
-                        <input
-                            type="text"
-                            name="topic"
-                            className="w-full p-2 border rounded-md"
-                            defaultValue={tip.topic}
-                            required
+                      </svg>
+                      Update Garden Tip
+                    </button>
+                    <Link
+                      to="/my-tips"
+                      className="btn btn-outline btn-neutral flex-1 text-center"
+                    >
+                      <svg
+                        className="w-5 h-5 mr-2 inline-block"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
                         />
-                    </div>
-
-                    <div>
-                        <label className="block font-medium">Difficulty Level</label>
-                        <select name="difficulty" className="w-full p-2 border rounded-md" defaultValue={tip.difficulty}>
-                            <option value="Easy">Easy</option>
-                            <option value="Medium">Medium</option>
-                            <option value="Hard">Hard</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label className="block font-medium">Category</label>
-                        <select name="category" className="w-full p-2 border rounded-md " defaultValue={tip.category}>
-                            <option value="Composting">Composting</option>
-                            <option value="Plant Care">Plant Care</option>
-                            <option value="Vertical Gardening">Vertical Gardening</option>
-                            <option value="Organic Farming">Organic Farming</option>
-                            <option value="Pest Control">Pest Control</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label className="block font-medium">Availability</label>
-                        <select name="availability" className="w-full p-2 border rounded-md " defaultValue={tip.availability}>
-                            <option value="Public">Public</option>
-                            <option value="Hidden">Hidden</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label className="block font-medium">Images URL</label>
-                        <input
-                            type="text"
-                            name="imageUrl"
-                            className="w-full p-2 border rounded-md"
-                            placeholder="https://example.com/image.jpg"
-                            defaultValue={tip.imageUrl}
-                        />
-                    </div>
-
-                    <div className="md:col-span-2">
-                        <label className="block font-medium">Description</label>
-                        <textarea
-                            name="description"
-                            rows="4"
-                            className="w-full p-2 border rounded-md"
-                            required
-                            defaultValue={tip.description}
-                        ></textarea>
-                    </div>
-
-                    <div>
-                        <label className="block font-medium">User Email</label>
-                        <input
-                            type="email"
-                            value={user?.email || ""}
-                            readOnly
-                            className="w-full p-2 bg-gray-100 border rounded-md"
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block font-medium">User Name</label>
-                        <input
-                            type="text"
-                            value={user?.displayName || ""}
-                            readOnly
-                            className="w-full p-2 bg-gray-100 border rounded-md"
-                        />
-                    </div>
-
-                    <div className="md:col-span-2">
-                        <button
-                            type="submit"
-                            className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-xl"
-                        >
-                            Submit Tip
-                        </button>
-                    </div>
-                </form>
+                      </svg>
+                      Cancel
+                    </Link>
+                  </div>
+                </div>
+              </form>
             </div>
-
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default UpdateTips;

@@ -1,113 +1,149 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLoaderData } from 'react-router';
+import { Eye, Heart, Filter } from 'lucide-react';
 
 const AllTips = () => {
-    const tipsData = useLoaderData();
-    console.log(tipsData);
-    const [filteredTips, setFilteredTips] = useState([]);
-    const [sortOrder, setSortOrder] = useState('asc'); // or 'desc'
-    const [sortField, setSortField] = useState('title');
-    const [selectedCategory, setSelectedCategory] = useState('All');
+  const tips = useLoaderData();
+  const [filteredTips, setFilteredTips] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filterDifficulty, setFilterDifficulty] = useState('All');
 
-    // get all unique categories
-    const categories = ['All', ...new Set(tipsData.map(tip => tip.category))];
-    console.log(categories)
+  useEffect(() => {
+    if (tips && tips.length) {
+      setFilteredTips(tips);
+      setLoading(false);
+    }
+  }, [tips]);
 
-    useEffect(() => {
-        let data = [...tipsData];
- 
-        // Filter
-        if (selectedCategory !== 'All') {
-            data = data.filter(tip => tip.category === selectedCategory);
-        }
+  useEffect(() => {
+    if (!tips) return;
+    if (filterDifficulty === 'All') {
+      setFilteredTips(tips);
+    } else {
+      setFilteredTips(tips.filter(tip => tip.difficulty === filterDifficulty));
+    }
+  }, [tips, filterDifficulty]);
 
-        // Sort
-        data.sort((a, b) => {
-            const valA = a[sortField].toLowerCase();
-            const valB = b[sortField].toLowerCase();
-            if (sortOrder === 'asc') return valA.localeCompare(valB);
-            else return valB.localeCompare(valA);
-        });
-
-        setFilteredTips(data);
-    }, [tipsData, sortField, sortOrder, selectedCategory]);
-
+  if (loading) {
     return (
-        <div className="py-12 px-4">
-            <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-                <div>
-                    <label className="mr-2 font-medium">Filter by Category:</label>
-                    <select
-                        value={selectedCategory}
-                        onChange={(e) => setSelectedCategory(e.target.value)}
-                        className="select select-bordered"
-                    >
-                        {categories.map((cat, index) => (
-                            <option key={index} value={cat}>{cat}</option>
-                        ))}
-                    </select>
-                </div>
-
-                <div className="flex gap-4">
-                    <div>
-                        <label className="mr-2 font-medium">Sort By:</label>
-                        <select
-                            value={sortField}
-                            onChange={(e) => setSortField(e.target.value)}
-                            className="select select-bordered"
-                        >
-                            <option value="title">Title</option>
-                            <option value="category">Category</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label className="mr-2 font-medium">Order:</label>
-                        <select
-                            value={sortOrder}
-                            onChange={(e) => setSortOrder(e.target.value)}
-                            className="select select-bordered"
-                        >
-                            <option value="asc">Ascending</option>
-                            <option value="desc">Descending</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div className="overflow-x-auto">
-                <table className="table w-full border-collapse text-center">
-                    <thead className="bg-gray-100">
-                        <tr>
-                            <th className="border px-4 py-2">Title</th>
-                            <th className="border px-4 py-2">Category</th>
-                            <th className="border px-4 py-2">Image</th>
-                            <th className="border px-4 py-2">Details</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredTips.map(tip => (
-                            <tr key={tip._id} className="hover:bg-gray-50">
-                                <td className="border px-4 py-2">{tip.title}</td>
-                                <td className="border px-4 py-2">{tip.category}</td>
-                                <td className="border px-4 py-2">
-                                    <img
-                                        src={tip.imageUrl}
-                                        alt={tip.title}
-                                        className="w-12 h-12 rounded-full object-cover mx-auto"
-                                    />
-                                </td>
-                                <td className="border px-4 py-2">
-                                    <Link to={`/publictips/${tip._id}`}>
-                                        <button className="btn btn-xs btn-primary">Details</button>
-                                    </Link>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="loading loading-spinner loading-lg text-primary"></div>
+      </div>
     );
+  }
+
+  return (
+    <div className="min-h-screen bg-base-100 py-8">
+      <div className="container mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl text-base-content font-bold mb-4">Browse Garden Tips</h1>
+          <p className="text-base-content/70 max-w-2xl mx-auto">
+            Discover expert gardening advice from our community of passionate gardeners
+          </p>
+        </div>
+
+        {/* Filter */}
+        <div className="flex flex-col md:flex-row gap-4 mb-8">
+          <div className="form-control">
+            <label htmlFor="difficulty-filter" className="flex text-base-content items-center gap-2 cursor-pointer">
+              <Filter className="w-4 h-4" />
+              <span className="sr-only ">Filter by difficulty</span>
+              <select
+                id="difficulty-filter"
+                className="select select-bordered"
+                value={filterDifficulty}
+                onChange={e => setFilterDifficulty(e.target.value)}
+              >
+                <option value="All">All Difficulty Levels</option>
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        {/* Results count */}
+        <p className="mb-6 text-sm text-base-content/70">
+          Showing {filteredTips.length} tip{filteredTips.length !== 1 ? 's' : ''}
+          {filterDifficulty !== 'All' && ` for ${filterDifficulty} difficulty`}
+        </p>
+
+        {/* Tips Table */}
+        {filteredTips.length > 0 ? (
+          <div className="overflow-x-auto bg-base-200 rounded-lg shadow-lg">
+            <table className="table w-full">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Difficulty</th>
+                  <th>Likes</th>
+                  <th>Author</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredTips.map(tip => (
+                  <tr key={tip._id} className="hover">
+                    <td>
+                      <div className="avatar">
+                        <div className="mask mask-squircle  w-12 h-12">
+                          <img src={tip.imageUrl} alt={tip.title} loading="lazy" />
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="font-bold line-clamp-2 text-base-content max-w-xs">{tip.title}</div>
+                    </td>
+                    <td>
+                      <div className="badge text-base-content badge-outline">{tip.category}</div>
+                    </td>
+                    <td>
+                      <div
+                        className={`badge ${
+                          tip.difficulty === 'Easy'
+                            ? 'badge-success'
+                            : tip.difficulty === 'Medium'
+                            ? 'badge-warning'
+                            : 'badge-error'
+                        }`}
+                      >
+                        {tip.difficulty}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex items-center gap-1">
+                        <Heart className="w-4 h-4 text-red-500" aria-label="Likes" />
+                        <span className="font-semibold text-base-content">{tip.totalLiked}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="text-sm font-medium text-base-content">{tip.userName}</div>
+                    </td>
+                    <td>
+                      <Link to={`/publictips/${tip._id}`} className="btn btn-primary btn-sm flex items-center gap-1">
+                        <Eye className="w-4 h-4" aria-hidden="true" />
+                        See More
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <div className="text-6xl mb-4">🌱</div>
+            <h3 className="text-xl font-semibold mb-2">No tips found</h3>
+            <p className="text-base-content/70">Try adjusting your filter criteria</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default AllTips;

@@ -12,7 +12,7 @@ import Categories from '../../Pages/Categories';
 const Home = () => {
     const {loading}=use(GardenContext)
         const {trendingtips,gardeners}=useLoaderData()
-        console.log(trendingtips,gardeners);
+        console.log(trendingtips);
 
     if(loading){
         return <Loading></Loading>
@@ -23,7 +23,7 @@ const Home = () => {
             <ActiveGardeners gardeners={gardeners}></ActiveGardeners>
             <TopTrending trendingtips={trendingtips}></TopTrending>
          <Categories trendingtips={trendingtips}></Categories>
-            <Qna></Qna>
+            {/* <Qna></Qna> */}
         </div>
     );
 };
