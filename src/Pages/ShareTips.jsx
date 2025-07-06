@@ -46,7 +46,7 @@ const ShareTips = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch("https://garden-guidance-server.vercel.app/api/sharetips", {
+    fetch("https://garden-hub-server-xi.vercel.app/api/sharetips", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -73,25 +73,25 @@ const ShareTips = () => {
   };
 
   return (
-    <div className="min-h-screen bg-base-100 dark:bg-gray-900 py-8">
+    <div className="min-h-screen bg-base-100 py-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-0">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-primary dark:text-primary-content mb-4">
+        <div className="max-w-4xl mx-auto  px-4 sm:px-6 lg:px-0">
+          <div className="text-center  mb-8">
+            <h1 className="text-4xl font-bold text-base-content  mb-4">
               Share a Garden Tip
             </h1>
-            <p className="text-lg text-base-content/70 dark:text-base-content/40">
+            <p className="text-lg text-base-content/70 ">
               Help fellow gardeners by sharing your knowledge and experience
             </p>
           </div>
 
-          <div className="card bg-base-200 dark:bg-gray-800 shadow-xl">
+          <div className="card bg-base-200  shadow-xl">
             <div className="card-body">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="form-control">
                     <label className="label dark:text-gray-300">
-                      <span className="label-text font-semibold dark:text-gray-300">
+                      <span className="label-text font-semibold text-base-content">
                         Title *
                       </span>
                     </label>
@@ -108,7 +108,7 @@ const ShareTips = () => {
 
                   <div className="form-control">
                     <label className="label dark:text-gray-300">
-                      <span className="label-text font-semibold dark:text-gray-300">
+                      <span className="label-text font-semibold text-base-content">
                         Plant Type/Topic *
                       </span>
                     </label>
@@ -125,7 +125,7 @@ const ShareTips = () => {
 
                   <div className="form-control">
                     <label className="label dark:text-gray-300">
-                      <span className="label-text font-semibold dark:text-gray-300">
+                      <span className="label-text font-semibold text-base-content">
                         Difficulty Level *
                       </span>
                     </label>
@@ -143,7 +143,7 @@ const ShareTips = () => {
 
                   <div className="form-control">
                     <label className="label dark:text-gray-300">
-                      <span className="label-text font-semibold dark:text-gray-300">
+                      <span className="label-text font-semibold text-base-content">
                         Category *
                       </span>
                     </label>
@@ -166,7 +166,7 @@ const ShareTips = () => {
 
                   <div className="form-control">
                     <label className="label dark:text-gray-300">
-                      <span className="label-text font-semibold dark:text-gray-300">
+                      <span className="label-text font-semibold text-base-content">
                         Availability *
                       </span>
                     </label>
@@ -183,7 +183,7 @@ const ShareTips = () => {
 
                   <div className="form-control">
                     <label className="label dark:text-gray-300">
-                      <span className="label-text font-semibold dark:text-gray-300">
+                      <span className="label-text font-semibold text-base-content">
                         Image URL
                       </span>
                     </label>
@@ -200,7 +200,7 @@ const ShareTips = () => {
 
                 <div className="form-control">
                   <label className="label dark:text-gray-300">
-                    <span className="label-text font-semibold dark:text-gray-300">
+                    <span className="label-text font-semibold text-base-content">
                       Description *
                     </span>
                   </label>
@@ -217,7 +217,7 @@ const ShareTips = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="form-control">
                     <label className="label dark:text-gray-300">
-                      <span className="label-text font-semibold dark:text-gray-300">
+                      <span className="label-text font-semibold text-base-content">
                         User Email
                       </span>
                     </label>
@@ -232,7 +232,7 @@ const ShareTips = () => {
 
                   <div className="form-control">
                     <label className="label dark:text-gray-300">
-                      <span className="label-text font-semibold dark:text-gray-300">
+                      <span className="label-text font-semibold text-base-content">
                         User Name
                       </span>
                     </label>

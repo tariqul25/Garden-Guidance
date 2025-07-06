@@ -1,19 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLoaderData } from 'react-router';
 import { GardenContext } from '../../provider/GardenContext';
+import useAxios from '../../hooks/useAxios';
 
 const DashBoard = () => {
   const { alltips, trendingtips, activegardeners } = useLoaderData();
   const { user } = useContext(GardenContext);
   const [mytips, setMyTips] = useState([]);
+  const axiosSecure = useAxios(); // ✅ get your secure axios instance
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`https://garden-guidance-server.vercel.app/api/sharetips/${user.email}`)
-        .then(res => res.json())
-        .then(data => setMyTips(data));
+      axiosSecure
+        .get(`/api/sharetips/${user.email}`)
+        .then((res) => setMyTips(res.data))
+        .catch((error) => console.error('Error fetching my tips:', error));
     }
-  }, [user]);
+  }, [user, axiosSecure]);
 
   return (
     <div className="min-h-screen bg-base-100 py-8 px-4 sm:px-6 lg:px-8">
@@ -21,7 +24,6 @@ const DashBoard = () => {
         {/* Header */}
         <div className="mb-8 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
           <h1 className="text-4xl font-bold text-[#0F4C3A] dark:text-[#8CAD88]">Dashboard</h1>
-          
         </div>
         <p className="text-base-content/70 mb-8 max-w-xl">
           Welcome back! Here's an overview of your gardening contributions.
@@ -73,19 +75,19 @@ const DashBoard = () => {
 
           <div className="stat bg-base-200 shadow-lg rounded-lg p-4">
             <div className="stat-title">Trending Tips</div>
-            <div className="stat-value text-[#38a169]">{trendingtips?.length}</div> {/* success color */}
+            <div className="stat-value text-[#38a169]">{trendingtips?.length}</div>
             <div className="stat-desc">Popular tips now</div>
           </div>
 
           <div className="stat bg-base-200 shadow-lg rounded-lg p-4">
             <div className="stat-title">Active Gardeners</div>
-            <div className="stat-value text-[#d69e2e]">{activegardeners?.length}</div> {/* warning color */}
+            <div className="stat-value text-[#d69e2e]">{activegardeners?.length}</div>
             <div className="stat-desc">Community members</div>
           </div>
 
           <div className="stat bg-base-200 shadow-lg rounded-lg p-4">
             <div className="stat-title">My Tips</div>
-            <div className="stat-value text-[#3182ce]">{mytips?.length}</div> {/* info color */}
+            <div className="stat-value text-[#3182ce]">{mytips?.length}</div>
             <div className="stat-desc">Tips you shared</div>
           </div>
         </div>

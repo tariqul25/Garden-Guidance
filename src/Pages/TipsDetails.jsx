@@ -1,11 +1,32 @@
-import React, { useState, useContext } from 'react';
-import { Link, useLoaderData } from 'react-router';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router';
 import { GardenContext } from '../provider/GardenContext';
+import useAxios from '../hooks/useAxios'; 
+import Loading from './Loading';
 
 const TipsDetails = () => {
-  const gardener = useLoaderData();
+  const { id } = useParams(); // get tip ID from URL
+  const axiosSecure = useAxios();
   const { like, setLike } = useContext(GardenContext);
   const [click, setClick] = useState(false);
+  const [gardener, setGardener] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch the tip details on mount or when id changes
+  useEffect(() => {
+    if (!id) return;
+
+    setLoading(true);
+    axiosSecure.get(`/api/publictips/${id}`)
+      .then(res => {
+        setGardener(res.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Failed to fetch tip details:', err);
+        setLoading(false);
+      });
+  }, [axiosSecure, id]);
 
   const handleLikeBtn = () => {
     if (click) {
@@ -16,32 +37,37 @@ const TipsDetails = () => {
     setClick(!click);
   };
 
+  if (loading) return <Loading />;
+
+  if (!gardener) return (
+    <div className="min-h-screen flex items-center justify-center text-base-content">
+      <p>Tip details not found.</p>
+    </div>
+  );
+
   return (
-    <div className="min-h-screen bg-base-100 dark:bg-gray-900 py-8">
+    <div className="min-h-screen bg-base-100 py-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-0">
           {/* Breadcrumb */}
           <div className="breadcrumbs text-sm mb-6 text-base-content/70 dark:text-base-content/40">
             <ul>
               <li>
-                <Link to="/" className="text-primary hover:text-primary-focus dark:text-primary-content dark:hover:text-primary-focus">
+                <Link to="/" className="text-primary hover:text-primary-focus dark:hover:text-primary-focus">
                   Home
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/browse-tips"
-                  className="text-primary hover:text-primary-focus dark:text-primary-content dark:hover:text-primary-focus"
-                >
+                <Link to="/alltips" className="text-primary hover:text-primary-focus dark:hover:text-primary-focus">
                   Browse Tips
                 </Link>
               </li>
-              <li className="text-base-content/60 dark:text-base-content/40">{gardener.title}</li>
+              <li className="text-base-content">{gardener.title}</li>
             </ul>
           </div>
 
           {/* Main Content */}
-          <div className="card bg-base-200 dark:bg-gray-800 shadow-xl">
+          <div className="card bg-base-200 shadow-xl">
             <figure className="relative">
               <img
                 src={gardener.imageUrl}
@@ -49,7 +75,7 @@ const TipsDetails = () => {
                 className="w-full h-64 md:h-80 object-cover"
               />
               <div className="absolute top-4 right-4">
-                <div className="badge badge-lg">{gardener.difficulty}</div>
+                <div className="badge badge-outline text-base-content badge-lg">{gardener.difficulty}</div>
               </div>
             </figure>
 
@@ -57,25 +83,18 @@ const TipsDetails = () => {
               {/* Header */}
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
                 <div className="flex-1">
-                  <h1 className="text-3xl md:text-4xl font-bold text-primary dark:text-primary-content mb-2">
-                    {gardener.title}
-                  </h1>
+                  <h1 className="text-3xl md:text-4xl font-bold text-primary mb-2">{gardener.title}</h1>
                   <div className="flex flex-wrap gap-2 mb-4">
-                    <div className="badge badge-outline badge-lg dark:border-gray-600 dark:text-gray-300">
-                      {gardener.category}
-                    </div>
-                    <div className="badge badge-outline badge-lg dark:border-gray-600 dark:text-gray-300">
-                      {gardener.topic}
-                    </div>
+                    <div className="badge badge-outline badge-lg text-base-content">{gardener.category}</div>
+                    <div className="badge badge-outline badge-lg text-base-content">{gardener.topic}</div>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4">
                   <button
                     onClick={handleLikeBtn}
-                    className={`btn btn-circle ${
-                      click ? 'btn-error' : 'btn-outline btn-error'
-                    }`}
+                    className={`btn btn-circle ${click ? 'btn-error' : 'btn-outline btn-error'}`}
+                    aria-label="Like button"
                   >
                     <svg
                       className="w-6 h-6"
@@ -99,7 +118,7 @@ const TipsDetails = () => {
               </div>
 
               {/* Details */}
-              <div className="prose prose-lg max-w-none dark:prose-invert">
+              <div className="prose prose-lg max-w-none dark:prose-invert text-base-content">
                 <p>{gardener.description}</p>
               </div>
 

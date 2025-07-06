@@ -1,9 +1,20 @@
-import React from 'react';
-import { useLoaderData } from 'react-router';
+import React, { useEffect, useState } from 'react';
 import { Leaf, MapPin, Clock } from 'lucide-react';
+import useAxios from '../hooks/useAxios';
 
 const AllGardeners = () => {
-  const gardeners = useLoaderData();
+  const axiosSecure = useAxios();
+  const [gardeners, setGardeners] = useState([]);
+
+  useEffect(() => {
+    axiosSecure.get('api/allgardeners')
+      .then(res => {
+        setGardeners(res.data);
+      })
+      .catch(err => {
+        console.error('Failed to fetch gardeners:', err);
+      });
+  }, [axiosSecure]);
 
   return (
     <div className="min-h-screen bg-base-100 py-8">
@@ -29,7 +40,7 @@ const AllGardeners = () => {
 
               <div className="card-body">
                 <div className="text-center mb-4">
-                  <h3 className="card-title text-lg text-base-content  1 justify-center">{name}</h3>
+                  <h3 className="card-title text-lg text-base-content justify-center">{name}</h3>
                   <div className="flex justify-center gap-2 mt-2">
                     <div className="badge badge-primary badge-sm">{status}</div>
                     <div className="badge badge-outline text-base-content badge-sm">{expertise}</div>

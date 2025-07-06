@@ -1,8 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axiosInstance from '../hooks/axiosInstance';
+import Loading from './Loading'; // adjust if needed
 
-const Categories = ({ trendingtips }) => {
+const Categories = () => {
+  const [trendingTips, setTrendingTips] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axiosInstance.get('/api/top-trending')
+      .then(res => {
+        setTrendingTips(res.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Failed to fetch trending tips:', err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <Loading />;
+
   // Create a map to count how many tips per category
-  const categoryMap = trendingtips.reduce((acc, tip) => {
+  const categoryMap = trendingTips.reduce((acc, tip) => {
     acc[tip.category] = (acc[tip.category] || 0) + 1;
     return acc;
   }, {});
@@ -23,14 +42,16 @@ const Categories = ({ trendingtips }) => {
   const categories = Object.entries(categoryMap).map(([name, count]) => ({
     name,
     count,
-    icon: categoryIcons[name] || '🌱', // default icon if none specified
+    icon: categoryIcons[name] || '🌱',
   }));
 
   return (
     <section className="py-16 bg-base-100">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl text-base-content  font-bold mb-4">Popular Garden Categories</h2>
+          <h2 className="text-3xl text-base-content font-bold mb-4">
+            Popular Garden Categories
+          </h2>
           <p className="text-base-content/70 max-w-2xl mx-auto">
             Explore different gardening styles and find your passion
           </p>

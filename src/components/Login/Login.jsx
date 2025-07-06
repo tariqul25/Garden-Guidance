@@ -46,7 +46,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 md:p-8 lg:p-12 bg-gradient-to-br from-[#0F4C3A]/20 to-[#8CAD88]/20 dark:from-[#8CAD88]/20 dark:to-[#0F4C3A]/20">
+    <div className="min-h-screen flex items-center justify-center p-4 md:p-8 lg:p-12 ">
       <div className="w-full max-w-md bg-white dark:bg-[#1a202c] rounded-xl shadow-2xl p-6 md:p-8 space-y-6">
         <div className="text-center mb-4">
           <div className="mx-auto mb-4 flex items-center justify-center rounded-full w-16 h-16 bg-[#0F4C3A] dark:bg-[#8CAD88]">
@@ -112,7 +112,7 @@ const Login = () => {
 
         <button
           onClick={handleGoogleSignIn}
-          className="flex items-center justify-center gap-2 w-full py-2 rounded-md border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#2d3748] transition"
+          className="flex items-center justify-center gap-2 w-full cursor-pointer py-2 rounded-md border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#2d3748] transition"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24">
             <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>

@@ -1,22 +1,31 @@
 import { useState, useEffect } from 'react';
-import { Link, useLoaderData } from 'react-router';
+import { Link } from 'react-router';
 import { Eye, Heart, Filter } from 'lucide-react';
+import useAxios from '../hooks/useAxios';
 
 const AllTips = () => {
-  const tips = useLoaderData();
+  const axiosSecure = useAxios();
+
+  const [tips, setTips] = useState([]);
   const [filteredTips, setFilteredTips] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterDifficulty, setFilterDifficulty] = useState('All');
 
   useEffect(() => {
-    if (tips && tips.length) {
-      setFilteredTips(tips);
-      setLoading(false);
-    }
-  }, [tips]);
+    axiosSecure.get('/api/alltips')
+      .then(res => {
+        setTips(res.data);
+        setFilteredTips(res.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Failed to fetch tips:', err);
+        setLoading(false);
+      });
+  }, [axiosSecure]);
 
+  // ✅ Filter by difficulty
   useEffect(() => {
-    if (!tips) return;
     if (filterDifficulty === 'All') {
       setFilteredTips(tips);
     } else {
@@ -48,7 +57,7 @@ const AllTips = () => {
           <div className="form-control">
             <label htmlFor="difficulty-filter" className="flex text-base-content items-center gap-2 cursor-pointer">
               <Filter className="w-4 h-4" />
-              <span className="sr-only ">Filter by difficulty</span>
+              <span className="sr-only">Filter by difficulty</span>
               <select
                 id="difficulty-filter"
                 className="select select-bordered"
@@ -90,7 +99,7 @@ const AllTips = () => {
                   <tr key={tip._id} className="hover">
                     <td>
                       <div className="avatar">
-                        <div className="mask mask-squircle  w-12 h-12">
+                        <div className="mask mask-squircle w-12 h-12">
                           <img src={tip.imageUrl} alt={tip.title} loading="lazy" />
                         </div>
                       </div>

@@ -1,19 +1,32 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, useLoaderData } from 'react-router';
+import { Link } from 'react-router';
 import Swal from 'sweetalert2';
 import { GardenContext } from '../provider/GardenContext';
 import Loading from './Loading';
+import useAxios from '../hooks/useAxios';
 
 const MyTips = () => {
-  const mytips = useLoaderData();
-  const { loading } = useContext(GardenContext);
-  const [allTips, setAllTips] = useState(mytips);
+  const axiosSecure = useAxios();
+  const { user, loading } = useContext(GardenContext);
+  const [allTips, setAllTips] = useState([]);
+  const [isFetching, setIsFetching] = useState(true);
 
   useEffect(() => {
-    setAllTips(mytips);
-  }, [mytips]);
+    if (!user?.email) return; // Wait until user email is ready
+    setIsFetching(true);
 
-  if (loading) {
+    axiosSecure.get(`/api/sharetips?email=${user.email}`)
+      .then(res => {
+        setAllTips(res.data);
+        setIsFetching(false);
+      })
+      .catch(err => {
+        console.error('Failed to fetch tips:', err);
+        setIsFetching(false);
+      });
+  }, [axiosSecure, user?.email]);
+
+  if (loading || isFetching) {
     return <Loading />;
   }
 
@@ -28,12 +41,9 @@ const MyTips = () => {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://garden-guidance-server.vercel.app/api/sharetips/${id}`, {
-          method: 'DELETE'
-        })
-          .then(res => res.json())
-          .then(data => {
-            if (data.deletedCount) {
+        axiosSecure.delete(`/api/sharetips/${id}`)
+          .then(res => {
+            if (res.data.deletedCount) {
               Swal.fire({
                 position: "top",
                 icon: "success",
@@ -43,6 +53,14 @@ const MyTips = () => {
               });
               setAllTips(allTips.filter(tip => tip._id !== id));
             }
+          })
+          .catch(err => {
+            console.error('Delete failed:', err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Delete Failed',
+              text: 'Please try again later.',
+            });
           });
       }
     });
@@ -70,7 +88,7 @@ const MyTips = () => {
               <h1 className="text-4xl font-bold text-primary mb-2">My Garden Tips</h1>
               <p className="text-lg text-base-content/70">Manage your shared gardening knowledge</p>
             </div>
-            <Link to="/share-tip" className="btn btn-primary">
+            <Link to="/sharetips" className="btn btn-primary">
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
@@ -78,6 +96,7 @@ const MyTips = () => {
             </Link>
           </div>
 
+          {/* Stats */}
           <div className="stats shadow mb-8 w-full">
             <div className="stat">
               <div className="stat-figure text-primary">
@@ -111,6 +130,7 @@ const MyTips = () => {
             </div>
           </div>
 
+          {/* Tips Table */}
           <div className="card bg-base-200 shadow-xl">
             <div className="card-body">
               <div className="overflow-x-auto">
@@ -137,7 +157,6 @@ const MyTips = () => {
                                 alt={tip.title}
                                 onError={(e) => {
                                   e.target.onerror = null;
-                                  e.target.src = 'https://via.placeholder.com/48';
                                 }}
                               />
                             </div>
@@ -190,7 +209,7 @@ const MyTips = () => {
                   </svg>
                   <h3 className="text-xl font-semibold text-base-content/60 mb-2">No tips shared yet</h3>
                   <p className="text-base-content/50 mb-4">Share your first gardening tip to help the community!</p>
-                  <Link to="/share-tip" className="btn btn-primary">
+                  <Link to="/sharetips" className="btn btn-primary">
                     Share Your First Tip
                   </Link>
                 </div>

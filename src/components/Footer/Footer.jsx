@@ -5,7 +5,7 @@ const Footer = () => {
  
       <footer className="py-16 bg-gradient-to-r from-primary to-[#8CAD88]">
         <div className="container mx-auto px-4">
-          <div className="text-center text-white">
+          <div className="text-center">
             <h2 className="text-3xl font-bold mb-4">Stay Connected with Nature</h2>
             <p className="mb-8 max-w-2xl mx-auto opacity-90">
               Get weekly gardening tips, seasonal advice, and community updates delivered to your inbox

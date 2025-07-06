@@ -1,8 +1,10 @@
-import React from 'react';
-import { NavLink, Outlet } from 'react-router';
+import React, { use } from 'react';
+import { Link, NavLink, Outlet } from 'react-router';
+import { GardenContext } from '../provider/GardenContext';
+import { Leaf } from 'lucide-react';
 
 const DashLayout = () => {
-  // Tailwind colors from your palette (hex)
+  const { user } = use(GardenContext)
   const colors = {
     primary: '#0F4C3A',
     secondary: '#8CAD88',
@@ -12,7 +14,7 @@ const DashLayout = () => {
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-      
+
       <div className="drawer-content flex flex-col">
         {/* Navbar for mobile */}
         <div className="navbar bg-[#e2e8f0] w-full lg:hidden">
@@ -59,7 +61,16 @@ const DashLayout = () => {
             color: colors.baseContent,
           }}
         >
-          <p className="text-3xl font-extrabold mb-4 select-none">GreenHaven</p>
+          <div className='flex items-center'>
+            <Link
+              to="/"
+              className="flex items-center gap-2 font-bold text-xl"
+              style={{ color: colors.primaryContent }}
+            >
+              <Leaf className="w-6 h-6" />
+              GardenHub
+            </Link>
+          </div>
           <li>
             <NavLink
               to="/"
@@ -96,7 +107,19 @@ const DashLayout = () => {
               All Tips
             </NavLink>
           </li>
-          
+          <li>
+            <NavLink
+              to={`/sharetips/${user?.email}`}
+              className={({ isActive }) =>
+                isActive
+                  ? 'bg-[#8CAD88] text-[#0F4C3A] font-bold rounded-md'
+                  : 'hover:bg-[#699b6a] hover:text-white rounded-md'
+              }
+            >
+              All Tips
+            </NavLink>
+          </li>
+
         </ul>
       </div>
     </div>

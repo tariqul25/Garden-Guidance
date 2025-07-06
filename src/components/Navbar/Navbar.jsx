@@ -39,7 +39,6 @@ const Navbar = () => {
 
   const isActive = (path) => location.pathname === path;
 
-  // Hex colors from your config:
   const colors = {
     primary: '#0F4C3A',
     primaryFocus: '#0a3529',
@@ -58,12 +57,13 @@ const Navbar = () => {
   };
 
   return (
+    <div className='sticky top-0 z-50 w-full'>
     <div style={{
         backgroundColor: theme === 'light' ? colors.primary : colors.secondary,
         color: colors.primaryContent,
       }} >
       <div
-      className="sticky top-0 z-50   max-w-7xl mx-auto p-3 flex items-center justify-between"
+      className="max-w-7xl mx-auto flex justify-between items-center py-3 px-4 "
       
     >
       {/* Navbar Start */}
@@ -102,6 +102,20 @@ const Navbar = () => {
                 Home
               </Link>
             </li>
+                <li>
+                  <Link
+                    to="/alltips"
+                    className={isActive('/alltips') ? 'font-bold' : ''}
+                    style={{
+                      backgroundColor: isActive('/alltips') ? colors.primaryFocus : 'transparent',
+                      borderRadius: '0.5rem',
+                      padding: '0.25rem 0.75rem',
+                      color: isActive('/alltips') ? colors.primaryContent : undefined,
+                    }}
+                  >
+                    Browse Tips
+                  </Link>
+                </li>
             <li>
               <Link
                 to="/sharetips"
@@ -114,20 +128,6 @@ const Navbar = () => {
                 }}
               >
                 Share Tips
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/alltips"
-                className={isActive('/alltips') ? 'font-bold' : ''}
-                style={{
-                  backgroundColor: isActive('/alltips') ? colors.primaryFocus : 'transparent',
-                  borderRadius: '0.5rem',
-                  padding: '0.25rem 0.75rem',
-                  color: isActive('/alltips') ? colors.primaryContent : undefined,
-                }}
-              >
-                Browse Tips
               </Link>
             </li>
             <li>
@@ -185,15 +185,15 @@ const Navbar = () => {
           style={{ color: colors.primaryContent }}
         >
           <Leaf className="w-6 h-6" />
-          GreenHaven
+          GardenHub
         </Link>
       </div>
 
       {/* Navbar Center (large screens) */}
       <div className="hidden lg:flex">
         <ul className="flex gap-1 px-1">
-          {['/', '/sharetips', '/alltips', '/allgardeners'].map((path, i) => {
-            const labels = ['Home', 'Share Tips', 'Browse Tips', 'Explore Gardeners'];
+          {['/',  '/alltips','/allgardeners','/sharetips'].map((path, i) => {
+            const labels = ['Home', 'Browse Tips','Explore Gardeners','Share Tips'  ];
             return (
               <li key={i}>
                 <Link
@@ -299,6 +299,7 @@ const Navbar = () => {
       </div>
 
       <Tooltip id="my-tooltip" place="top" />
+    </div>
     </div>
     </div>
   );

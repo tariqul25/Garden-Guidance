@@ -1,14 +1,34 @@
+import { useEffect, useState } from 'react';
 import { Leaf, Users } from 'lucide-react';
-import React from 'react';
-const ActiveGardeners = ({ gardeners }) => {
+import axiosInstance from '../hooks/axiosInstance'; 
+import Loading from './Loading';
+
+const ActiveGardeners = () => {
+  const [gardeners, setGardeners] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axiosInstance.get('/api/gardeners')
+      .then(res => {
+        setGardeners(res.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Failed to fetch gardeners:', err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <Loading />;
+
   return (
     <section className="py-16 bg-base-100">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4 text-base-content dark:text-base-content flex items-center justify-center gap-2">
-              <Users className="w-8 h-8 text-primary" />
+            <Users className="w-8 h-8 text-primary" />
             Featured Active Gardeners
-          </h2> 
+          </h2>
           <p className="text-base-content/70 max-w-2xl mx-auto">
             Connect with our community's most experienced and active gardeners who share their knowledge daily.
           </p>
@@ -26,7 +46,7 @@ const ActiveGardeners = ({ gardeners }) => {
                 />
               </figure>
               <div className="card-body items-center text-center">
-                <h3 className="card-title text-black dark:text-white text-lg">{name}</h3>
+                <h3 className="card-title text-base-content text-lg">{name}</h3>
                 <div className="badge badge-primary badge-sm">{status}</div>
                 <div className="text-sm text-base-content/70 space-y-1 mt-2">
                   <p>Age: {age} • {gender}</p>
@@ -34,8 +54,8 @@ const ActiveGardeners = ({ gardeners }) => {
                   <p>Experience: {experience}</p>
                 </div>
                 <div className="flex items-center gap-2 mt-4">
-                 <Leaf className="w-4 h-4 text-green-500" />
-                  <span className="font-semibold">{totalTips} tips shared</span>
+                  <Leaf className="w-4 h-4 text-green-500" />
+                  <span className="font-semibold text-base-content">{totalTips} tips shared</span>
                 </div>
               </div>
             </div>

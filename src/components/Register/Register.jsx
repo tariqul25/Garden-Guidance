@@ -89,19 +89,8 @@ const Register = () => {
   };
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center p-4"
-      style={{
-        background: `linear-gradient(to bottom right, ${colors.primary}33, ${colors.secondary}33)`, // 20% opacity
-      }}
-    >
-      <div
-        className="w-full max-w-md shadow-2xl rounded-lg p-6"
-        style={{
-          backgroundColor: theme === 'light' ? colors.base100Light : colors.base100Dark,
-          color: theme === 'light' ? colors.baseContentLight : colors.baseContentDark,
-        }}
-      >
+    <div className="min-h-screen flex items-center justify-center p-4 md:p-8 lg:p-12 ">
+      <div className="w-full max-w-md bg-white dark:bg-[#1a202c] rounded-xl shadow-2xl p-6 md:p-8 space-y-6">
         <div className="text-center mb-6">
           <div
             className="rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4"
@@ -113,7 +102,7 @@ const Register = () => {
             <UserPlus className="w-8 h-8" />
           </div>
           <h2 className="text-2xl font-bold">Join GardenHub</h2>
-          <p style={{ color: theme === 'light' ? `${colors.baseContentLight}b3` : `${colors.baseContentDark}b3` }}>
+          <p  >
             Create your gardening account
           </p>
         </div>
@@ -227,7 +216,7 @@ const Register = () => {
 
         <button
           onClick={handleGoogleSignIn}
-          className="w-full rounded-md font-semibold py-2 flex justify-center items-center gap-2 border"
+          className="w-full rounded-md font-semibold py-2 cursor-pointer flex justify-center items-center gap-2 border"
           style={{
             borderColor: theme === 'light' ? colors.primary : colors.secondary,
             color: theme === 'light' ? colors.primary : colors.secondary,
@@ -243,7 +232,7 @@ const Register = () => {
           Continue with Google
         </button>
 
-        <div className="text-center mt-6 text-sm" style={{ color: theme === 'light' ? colors.baseContentLight + 'b3' : colors.baseContentDark + 'b3' }}>
+        <div className="text-center mt-6 text-sm" >
           Already have an account?{' '}
           <Link to="/login" className="font-medium underline" style={{ color: colors.primary }}>
             Sign in here
