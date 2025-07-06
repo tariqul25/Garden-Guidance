@@ -12,9 +12,9 @@ This project is a full-stack web application aimed at building a community for g
 ---
 ## 🌐 Live Site & Repositories
 
-- 🔗 Live Website: [https://garden-guidance.web.app/](https://garden-guidance.web.app/)
-- 🧠 Client Repo: [ GitHub-Client ](https://github.com/Programming-Hero-Web-Course4/b11a10-client-side-tariqul25)
-- 🧪 Server Repo: [ GitHub-Server ](https://github.com/Programming-Hero-Web-Course4/b11a10-server-side-tariqul25)
+- 🔗 Live Website: (https://garden-hub-548e6.web.app)
+- 🧠 Client Repo: [ GitHub-Client ](https://github.com/tariqul25/Garden-Guidance.git)
+- 🧪 Server Repo: [ GitHub-Server ](https://github.com/tariqul25/Garden-Guidance-Server.git)
 
 ## ✨ Key Features
 
